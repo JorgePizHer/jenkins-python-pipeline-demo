@@ -10,6 +10,12 @@ pipeline {
         CUSTOM_VAR = "Variable definida por el usuario"
     }
 
+    
+    triggers {
+        pollSCM('0 7 * * *')
+    }
+
+
     stages {
 
         stage('Init Info') {
