@@ -33,7 +33,7 @@ pipeline {
             steps {
                 sh """
                 python3 -m venv venv
-                source venv/bin/activate
+                . venv/bin/activate
                 """
             }
         }
@@ -41,7 +41,7 @@ pipeline {
         stage('Install requirements') {
             steps {
                 sh """
-                source venv/bin/activate
+                . venv/bin/activate
                 pip install -r requirements.txt
                 """
             }
@@ -50,7 +50,7 @@ pipeline {
         stage('Execute script') {
             steps {
                 sh """
-                source venv/bin/activate
+                . venv/bin/activate
                 python script.py --msg "${params.USER_MESSAGE}" --file "${params.INPUT_FILE}"
                 """
             }
