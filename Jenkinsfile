@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         string(name: 'USER_MESSAGE', defaultValue: 'Hola desde Jenkins', description: 'Mensaje enviado al script.')
-        file(name: 'INPUT_FILE', description: 'Archivo que será leído por el script Python')
+        string(name: 'INPUT_FILENAME', defaultValue: 'prueba_jenkins.txt', description: 'Archivo que será leído por el script Python')
     }
 
     environment {
@@ -47,11 +47,22 @@ pipeline {
             }
         }
 
+        
+        stage('Process file') {
+                    steps {
+                        sh """
+                        echo "Mostrando contenido del archivo ${params.INPUT_FILENAME}:"
+                        cat ${params.INPUT_FILENAME}
+                        """
+                    }
+                }
+
+
         stage('Execute script') {
             steps {
                 sh """
                 . venv/bin/activate
-                python script.py --msg "${params.USER_MESSAGE}" --file "${params.INPUT_FILE}"
+                python script.py --msg "${params.USER_MESSAGE}" --file "${params.INPUT_FILENAME}"
                 """
             }
         }
